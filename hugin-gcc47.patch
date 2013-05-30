@@ -1,0 +1,18 @@
+diff -aurN hugin-2011.4.0.orig/src/celeste/Utilities.cpp hugin-2011.4.0/src/celeste/Utilities.cpp
+--- hugin-2011.4.0.orig/src/celeste/Utilities.cpp	2012-07-04 09:06:46.579969310 +0200
++++ hugin-2011.4.0/src/celeste/Utilities.cpp	2012-07-04 09:07:17.928577399 +0200
+@@ -27,6 +27,7 @@
+ 
+ #include <math.h>
+ #include <stdlib.h>
++#include <unistd.h>
+ #include "Utilities.h"
+ 
+ using namespace std; 
+@@ -285,4 +286,4 @@
+ 	else return val;
+ }
+ 
+-}; // namespace
+\ No newline at end of file
++}; // namespace
