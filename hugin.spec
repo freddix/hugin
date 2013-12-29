@@ -1,11 +1,11 @@
 Summary:	Toolchain to create panoramic images
 Name:		hugin
-Version:	2012.0.0
+Version:	2013.0.0
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications/Graphics
 Source0:	http://downloads.sourceforge.net/hugin/%{name}-%{version}.tar.bz2
-# Source0-md5:	6a4fb2585eb3539ba6769cf4557f6e88
+# Source0-md5:	cc6c768df2aedc24a9a081754de05f39
 Patch0:		%{name}-cppflags.patch
 Patch1:		%{name}-desktop.patch
 Patch2:		%{name}-gcc47.patch
@@ -48,6 +48,11 @@ more.
 mv -f src/translations/{ca_ES,ca}.po
 mv -f src/translations/{cs_CZ,cs}.po
 
+%{__sed} -i -e'1s|#!\?/usr/bin/envpython|#!/usr/bin/python|' \
+	src/hugin_script_interface/hpi.py \
+	src/hugin_script_interface/plugins/*.py \
+	src/hugin_script_interface/plugins-dev/*.py
+
 %build
 install -d build
 cd build
@@ -85,11 +90,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/autopano-noop.sh
 %attr(755,root,root) %{_bindir}/calibrate_lens_gui
 %attr(755,root,root) %{_bindir}/celeste_standalone
+%attr(755,root,root) %{_bindir}/checkpto
 %attr(755,root,root) %{_bindir}/cpclean
+%attr(755,root,root) %{_bindir}/cpfind
 %attr(755,root,root) %{_bindir}/deghosting_mask
 %attr(755,root,root) %{_bindir}/fulla
-%attr(755,root,root) %{_bindir}/checkpto
-%attr(755,root,root) %{_bindir}/cpfind
+%attr(755,root,root) %{_bindir}/geocpset
 %attr(755,root,root) %{_bindir}/hugin
 %attr(755,root,root) %{_bindir}/hugin_hdrmerge
 %attr(755,root,root) %{_bindir}/hugin_stitch_project
@@ -101,14 +107,15 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/pano_modify
 %attr(755,root,root) %{_bindir}/pano_trafo
 %attr(755,root,root) %{_bindir}/pto2mk
-%attr(755,root,root) %{_bindir}/pto_merge
 %attr(755,root,root) %{_bindir}/pto_gen
+%attr(755,root,root) %{_bindir}/pto_lensstack
+%attr(755,root,root) %{_bindir}/pto_merge
+%attr(755,root,root) %{_bindir}/pto_var
 %attr(755,root,root) %{_bindir}/tca_correct
 %attr(755,root,root) %{_bindir}/vig_optimize
 
 %dir %{_libdir}/hugin
 %attr(755,root,root) %{_libdir}/hugin/libceleste.so.*.*
-%attr(755,root,root) %{_libdir}/hugin/libflann_cpp.so.*.*
 %attr(755,root,root) %{_libdir}/hugin/libhuginbase.so.*.*
 %attr(755,root,root) %{_libdir}/hugin/libhuginbasewx.so.*.*
 %attr(755,root,root) %{_libdir}/hugin/libhuginlines.so.*.*
@@ -119,8 +126,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(755,root,root) %{_libdir}/hugin/libhugin_python_interface.so.*.*
 %attr(755,root,root) %{py_sitedir}/_hsi.so
-%{py_sitedir}/hpi.py[co]
-%{py_sitedir}/hsi.py[co]
+%{py_sitedir}/hpi.py*
+%{py_sitedir}/hsi.py*
 
 %{_datadir}/%{name}
 %{_datadir}/mime/packages/hugin.xml
